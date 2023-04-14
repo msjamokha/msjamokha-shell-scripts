@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# col_mod : Delete columns or swap 2 columns, depending on user input.
+# col_mod : Delete a field (column) or swap two user-specified column from a
+# file. The field separator can be user-specified (default assumes CSV).
 #
 
 prog_name=$(basename "$0")
