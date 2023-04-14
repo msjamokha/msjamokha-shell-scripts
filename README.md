@@ -14,15 +14,15 @@ If a script has a specific filename extension (E.g. .bash, .csh) then it makes
 use of specific features in that shell, and will **not** work on the lowest-
 common denominator, sh.
 
-### What does each script do?
+### Summary of each script
 
 Each script has a brief summary of it's purpose in a "header" of sorts.
 Otherwise, refer to this list:
 
-col\_mod.sh
+**col_mod.sh**
 Swaps 2 columns (fields) or delete 1 column from a .CSV or CSV-like file by
 specifying a different delimiter.
 
-mastermind.sh
+**mastermind.sh**
 Attempt at implementing the code-breaker game "Mastermind" in pure POSIX shell.
 Uses digits 0 through 9 as symbols instead of colours. Codes are 4-digits long.
