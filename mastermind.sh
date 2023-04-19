@@ -112,40 +112,40 @@ check_code(){
 					1)	# If answer digit didn't already give red point and if there's a match
 						if [ "$guess_digit" = "$ans_digit" ] && [ "$j" != "$red_marker1" ]; then
 							# If guess digit didn't already give a white point
-							if echo "$guess_digit" | grep -q "$white_marker1"; then
+							if echo "$i" | grep -q "$white_marker1"; then
 								# Add white points and add mark the answer position as "already scored"
 								white_score=$((white_score+1))
-								white_marker1="$white_marker1""$j"
+								white_marker1="$white_marker1""$i"
 							fi
 						fi
 						;;
 					2)	# If answer digit didn't already give red point and if there's a match
 						if [ "$guess_digit" = "$ans_digit" ] && [ "$j" != "$red_marker2" ]; then
 							# If guess digit didn't already give a white point
-							if echo "$guess_digit" | grep -q "$white_marker2"; then
+							if echo "$i" | grep -q "$white_marker2"; then
 								# Add white points and add mark the answer position as "already scored"
 								white_score=$((white_score+1))
-								white_marker2="$white_marker2""$j"
+								white_marker2="$white_marker2""$i"
 							fi
 						fi
 						;;
 					3)	# If answer digit didn't already give red point and if there's a match
 						if [ "$guess_digit" = "$ans_digit" ] && [ "$j" != "$red_marker3" ]; then
 							# If guess digit didn't already give a white point
-							if echo "$guess_digit" | grep -q "$white_marker3"; then
+							if echo "$i" | grep -q "$white_marker3"; then
 								# Add white points and add mark the answer position as "already scored"
 								white_score=$((white_score+1))
-								white_marker3="$white_marker3""$j"
+								white_marker3="$white_marker3""$i"
 							fi
 						fi
 						;;
 					4)	# If answer digit didn't already give red point and if there's a match
 						if [ "$guess_digit" = "$ans_digit" ] && [ "$j" != "$red_marker4" ]; then
 							# If guess digit didn't already give a white point
-							if echo "$guess_digit" | grep -q "$white_marker4"; then
+							if echo "$i" | grep -q "$white_marker4"; then
 								# Add white points and add mark the answer position as "already scored"
 								white_score=$((white_score+1))
-								white_marker4="$white_marker4""$j"
+								white_marker4="$white_marker4""$i"
 							fi
 						fi
 						;;
