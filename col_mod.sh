@@ -1,14 +1,13 @@
 #!/bin/sh
 #
-# col_mod : Delete a field (column) or swap two user-specified column from a
-# file. The field separator can be user-specified (default assumes CSV).
+# col_mod : Delete columns or swap 2 columns, depending on user input.
 #
 
 prog_name=$(basename "$0")
 fields_delete=
 fields_swap=
-ppe_op=
-file_ppe=
+fields_op=
+input_file=
 delimiter=","
 
 info_usage(){
@@ -42,6 +41,8 @@ info_usage(){
 			;;
 		9)	printf "Error: specified swap fields were out of range\n" >&2
 			;;
+		10)	printf "Error: \'%s\' is not a valid swap range\n" "$2" >&2
+			;;
 	esac
 	printf "\n%s: usage: %s [--swap col1,col2 | --delete col] [-d DELIMITER] --file FILE\n" "$prog_name" "$prog_name" 
 	return
@@ -49,7 +50,7 @@ info_usage(){
 
 col_swap(){
 	# Retrieve the column numbers from the swap argument
-	IFS="," read col1 col2 <<- EOF
+	IFS="," read -r col1 col2 <<- EOF
 	$1
 	EOF
 	
@@ -157,8 +158,8 @@ if [ -n "$1" ]; then # Check if arguments were supplied or not
 						# If the file exists and is accessible
 						if [ -f "$1" ] && [ -r "$1" ]; then
 							# If this is a duplicate argument
-							[ -n "$file_ppe" ] && info_usage "4" "file" && exit 1
-							file_ppe="$1"
+							[ -n "$input_file" ] && info_usage "4" "file" && exit 1
+							input_file="$1"
 						else
 							info_usage "2" "$(basename "$1")"
 							exit 1
@@ -172,15 +173,18 @@ if [ -n "$1" ]; then # Check if arguments were supplied or not
 						# If argument is not a number
 						$(echo "$1" | grep -Eq "[^0-9]") && info_usage "5" "$1" && exit 1
 						fields_delete="$1"
-						ppe_op="delete"
+						fields_op="delete"
 						;;
 			--swap)		shift
 						# If this is a duplicate argument
 						[ -n "$fields_swap" ] && info_usage "4" "swap" && exit 1
 						# If delete was already specified
 						[ -n "$fields_delete" ] && info_usage "6" && exit 1
+
+						# If input includes invalid characters
+						$(echo "$1" | grep -Eq "[^0-9,]") && info_usage "10" "$1" && exit 1
 						fields_swap="$1"
-						ppe_op="swap"
+						fields_op="swap"
 						;;
 			--help) 	info_usage "0"
 						exit
@@ -198,10 +202,10 @@ else
 	info_usage "1"
 	exit 1
 fi
-case "$ppe_op" in
-	delete)	col_del "$fields_delete" "$file_ppe" || exit 1
+case "$fields_op" in
+	delete)	col_del "$fields_delete" "$input_file" || exit 1
 			;;
-	swap)	col_swap "$fields_swap" "$file_ppe" || exit 1
+	swap)	col_swap "$fields_swap" "$input_file" || exit 1
 			;;
 	*)		info_usage "7"
 			exit 1
